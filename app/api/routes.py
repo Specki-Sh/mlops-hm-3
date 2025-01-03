@@ -1,10 +1,9 @@
 from fastapi import APIRouter, HTTPException
-from typing import List, Union
 from app.api.schemas import (
     PredictionInput,
     PredictionOutput,
     PredictionResult,
-    PredictionFeatures
+    PredictionFeatures,
 )
 from app.services.model import model_service
 from app.core.config import settings
@@ -20,7 +19,6 @@ def health_check():
 @router.post("/predict", response_model=PredictionOutput)
 def predict(input_data: PredictionInput):
     try:
-        # Преобразуем входные данные в список, если это одиночный объект
         features = input_data.data
         if isinstance(features, PredictionFeatures):
             features = [features]
@@ -32,7 +30,7 @@ def predict(input_data: PredictionInput):
                 PredictionResult(
                     id=features[i].id,
                     prediction=float(pred),
-                    model_version=settings.MODEL_VERSION
+                    model_version=settings.MODEL_VERSION,
                 )
                 for i, pred in enumerate(predictions)
             ]

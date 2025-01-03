@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 
+
 class Settings(BaseSettings):
     # API Settings
     HOST: str = "0.0.0.0"
@@ -12,5 +13,6 @@ class Settings(BaseSettings):
 
     class Config:
         case_sensitive = True
+
 
 settings = Settings()
